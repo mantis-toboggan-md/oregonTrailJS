@@ -10,6 +10,7 @@ body{
   & p{
     padding: 20px;
   }
+  font-family: monospace;
 }
 input{
   background-color: black;
@@ -19,6 +20,10 @@ input{
 }
 ul{
   list-style: none;
+}
+table{
+  position: fixed;
+  border-bottom: 1px solid red;
 }
 #gameScreen{
   height: 500px;
@@ -46,6 +51,12 @@ ul{
   left: -200px;
   top: -150px;
 }
+#bill{
+  position: relative;
+  top: -50px;
+  left: 35px;
+}
+
 @keyframes blink {
     from { opacity: 1; }
     to { opacity: 0; }
@@ -56,4 +67,12 @@ ul{
   padding: 3px;
   background-color: black;
   color: white;
+}
+
+.location-header{
+  border-top: 3px solid red;
+  border-bottom: 3px solid red;
+  width: 100%;
+  align-self: baseline;
+  padding: 20px;
 }

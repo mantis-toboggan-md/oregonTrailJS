@@ -5,7 +5,8 @@ body {
   min-height: 100%;
   color: white;
   font-size: 30;
-  line-height: 2; }
+  line-height: 2;
+  font-family: monospace; }
   body p {
     padding: 20px; }
 
@@ -17,6 +18,10 @@ input {
 
 ul {
   list-style: none; }
+
+table {
+  position: fixed;
+  border-bottom: 1px solid red; }
 
 #gameScreen {
   height: 500px;
@@ -43,6 +48,11 @@ ul {
   left: -200px;
   top: -150px; }
 
+#bill {
+  position: relative;
+  top: -50px;
+  left: 35px; }
+
 @keyframes blink {
   from {
     opacity: 1; }
@@ -53,5 +63,12 @@ ul {
   padding: 3px;
   background-color: black;
   color: white; }
+
+.location-header {
+  border-top: 3px solid red;
+  border-bottom: 3px solid red;
+  width: 100%;
+  align-self: baseline;
+  padding: 20px; }
 
 /*# sourceMappingURL=style.css.map */

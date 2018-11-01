@@ -18,8 +18,21 @@ var userCharacter = {
   groupNames: ["group member 2", "group member 3", "group member 4"],
   groupHealth: ["Good", "Good", "Good"],
   money: 1000,
-  pointMulti: 1
+  pointMulti: 1,
+  oxen: 0,
+  winterClothes: 0,
+  summerClothes: 0,
+  food: 0,
+  ammo: 0,
+  spareParts: 0
 }
+
+var oxenPrice = 50;
+var foodPrice = 50;
+var winterClothesPrice = 50;
+var summerClothesPrice = 50;
+var ammoPrice = 50;
+var sparePartsPrice = 50;
 
 //generic error message, displays content in string as text
 function errMsg(str){
@@ -201,15 +214,15 @@ function pickGroupNames(){
 
   //add listener for continue button to save names and move to character summary screen
   userInputEl.addEventListener("click", function(event){
-    if(nameTwoEl.value){
+    if(nameTwoInput.value){
       console.log(nameTwoEl.value)
-      userCharacter["groupNames"][0] = nameTwoEl.value
+      userCharacter["groupNames"][0] = nameTwoInput.value
     }
-    if(nameThreeEl.value){
-      userCharacter["groupNames"][1] = nameThreeEl.value
+    if(nameThreeInput.value){
+      userCharacter["groupNames"][1] = nameThreeInput.value
     }
-    if(nameFourEl.value){
-      userCharacter["groupNames"][2] = nameFourEl.value
+    if(nameFourInput.value){
+      userCharacter["groupNames"][2] = nameFourInput.value
     }
     askGroupNamesEl.parentNode.removeChild(askGroupNamesEl);
     groupNamesEl.parentNode.removeChild(groupNamesEl);
@@ -219,7 +232,21 @@ function pickGroupNames(){
   })
 }
 
+//bring up an initial summary of the group names
 function characterSummary(){
+  //remove event listener from continue button
+  var old_element = userInputEl;
+  var new_element = old_element.cloneNode(true);
+  old_element.parentNode.replaceChild(new_element, old_element);
+  userInputEl = new_element;
+
+  userInputEl.addEventListener("click", function(){
+    if(summaryBox){
+      summaryBox.parentNode.removeChild(summaryBox);
+    }
+    shoppingInfo()
+  })
+
   var summaryBox = document.createElement("section");
   summaryBox.classList.add("message");
   summaryBox.innerHTML = `
@@ -233,6 +260,80 @@ function characterSummary(){
     Money: ${userCharacter["money"]}
     `
   gameScreen.insertBefore(summaryBox, gameScreen.childNodes[0])
+}
+
+//bring up info on items to purchase
+function shoppingInfo(){
+  var shoppingIntroTextEl = document.createElement("section");
+  shoppingIntroTextEl.innerHTML = `
+    <p>Hello, I'm Matt. So you're going to Oregon? I can fix you up with what you need:
+      <ul>
+        <li>- a team of oxen to pull your wagon</li>
+        <li>- clothing for both winter and summer</li>
+        <li>- plenty of food for the trip</li>
+        <li>- ammunition for your rifles</li>
+        <li>- spare parts for your wagon</li>
+      </ul>
+    </p>
+  `
+  gameScreen.insertBefore(shoppingIntroTextEl, gameScreen.childNodes[0])
+
+  //remove event listener from continue button
+  var old_element = userInputEl;
+  var new_element = old_element.cloneNode(true);
+  old_element.parentNode.replaceChild(new_element, old_element);
+  userInputEl = new_element;
+  //move on to purchase screen when user clicks continue button
+  userInputEl.addEventListener("click", function(event){
+    shoppingIntroTextEl.parentNode.removeChild(shoppingIntroTextEl);
+      purchaseFirst()
+  })
+}
+
+function purchaseFirst(){
+  var storeTitle = document.createElement("section")
+  storeTitle.setAttribute("class", "location-header")
+  storeTitle.innerHTML = `
+    <h2>Matt's General Store</h2>
+    <h3>Independence, Missouri: March 1, 1848</h3>
+  `
+  var oxenSpent = (userCharacter["oxen"] * oxenPrice);
+  var foodSpent = (userCharacter["food"] * foodPrice);
+  var clothesSpent = (userCharacter["winterClothes"] * winterClothesPrice + userCharacter["summerClothes"] * summerClothesPrice)
+  var ammoSpent = (userCharacter["ammo"] * ammoPrice)
+  var sparePartsSpent = (userCharacter["spareParts"] * sparePartsPrice)
+  var totalSpent = (oxenSpent + foodSpent + clothesSpent + ammoSpent + sparePartsSpent);
+
+  var storeInv = document.createElement("table")
+  storeInv.innerHTML = `
+    <tr>
+      <td>1. Oxen</td>
+      <td>${oxenSpent.toFixed(2)}</td>
+    </tr>
+    <tr>
+      <td>2. Food</td>
+      <td>${foodSpent.toFixed(2)}</td>
+    </tr>
+    <tr>
+      <td>3. Clothing</td>
+      <td>${clothesSpent.toFixed(2)}</td>
+    </tr>
+    <tr>
+      <td>4. Ammunition</td>
+      <td>${ammoSpent.toFixed(2)}</td>
+    </tr>
+    <tr>
+      <td>5. Spare parts</td>
+      <td>${sparePartsSpent.toFixed(2)}</td>
+    </tr>
+  `
+  gameScreen.insertBefore(storeInv, gameScreen.childNodes[0])
+  gameScreen.insertBefore(storeTitle, gameScreen.childNodes[0])
+  var bill = document.createElement("p")
+  bill.setAttribute("id", "bill")
+  bill.innerHTML = `Bill: ${totalSpent.toFixed(2)}`
+  gameScreen.insertBefore(bill, document.querySelector("form"))
+
 }
 
 })
