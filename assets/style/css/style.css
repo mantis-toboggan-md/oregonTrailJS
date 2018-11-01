@@ -4,30 +4,44 @@ html {
 body {
   min-height: 100%;
   color: white;
-  font-size: 30; }
+  font-size: 30;
+  line-height: 2; }
+  body p {
+    padding: 20px; }
+
+input {
+  background-color: black;
+  width: 100px;
+  border: none;
+  color: white; }
+
+ul {
+  list-style: none; }
 
 #gameScreen {
   height: 500px;
   width: 700px;
   background-color: black;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center; }
 
 #userInput {
   position: fixed;
   top: 400px;
-  left: 600px;
-  background-color: black;
-  width: 20px;
-  border: none;
-  color: white; }
+  left: 600px; }
   #userInput::placeholder {
     color: white;
     animation-name: blink;
     animation-duration: 800ms;
     animation-iteration-count: infinite;
     opacity: 1; }
+
+#nameList {
+  position: relative;
+  left: -200px;
+  top: -150px; }
 
 @keyframes blink {
   from {
@@ -36,9 +50,8 @@ body {
     opacity: 0; } }
 .message {
   border: 1px solid white;
-  padding: 3px; }
-
-ol {
-  line-height: 2; }
+  padding: 3px;
+  background-color: black;
+  color: white; }
 
 /*# sourceMappingURL=style.css.map */
