@@ -96,14 +96,10 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector("#userInput").value = '';
         //make sure user has selected valid option
         if(userInput > 4 || userInput < 0 || userInput.length>1){
+          console.log("false userInput: " + userInput.length)
           errMsg("Enter a number to choose the corresponding option")
         }
         else{
-          // var displayChoice = document.createElement("p");
-          // displayChoice.innerText = document.querySelector(`li:nth-child(${userInput})`).innerText
-          // document.querySelector("ol").parentNode.removeChild(document.querySelector("ol"))
-          // document.querySelector("#gameScreen").appendChild(displayChoice);
-          //set character role
           console.log("userInput: " + userInput)
           //set character role
           switch(userInput){
@@ -129,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         //if the user has chosen a character, move on to naming screen
-        if(userCharacter["money"]>-1){
+        if(userCharacter["role"]!== "none"){
           //remove the character options
           document.querySelector("ol").parentNode.removeChild(document.querySelector("ol"));
           pickName();
@@ -151,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var new_element = old_element.cloneNode(true);
       old_element.parentNode.replaceChild(new_element, old_element);
     //add listener to go back to character select screen on submittal
+    document.querySelector("#userInput").focus();
     document.querySelector("form").addEventListener("submit", function(event){
       removeErrMsgs()
       event.preventDefault();
@@ -213,6 +210,7 @@ function pickGroupNames(){
   gameScreen.appendChild(userInputEl)
 
   //add listener for continue button to save names and move to character summary screen
+  document.querySelector("#userInput").focus();
   userInputEl.addEventListener("click", function(event){
     if(nameTwoInput.value){
       console.log(nameTwoEl.value)
